@@ -20,6 +20,8 @@
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
   },
+  "bugs": "https://github.com/ksm2/helm-tools/issues",
+  "homepage": "https://github.com/ksm2/helm-tools#readme",
   "engines": {
     "node": ">= 18"
   }
