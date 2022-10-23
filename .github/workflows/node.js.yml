@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  NODE_VERSION: 18.x
+  NODE_VERSION: 16.x
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
