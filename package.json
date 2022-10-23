@@ -3,25 +3,36 @@
   "version": "0.1.0-dev.0",
   "main": "lib/main.js",
   "license": "MIT",
+  "bin": {
+    "helm-tools": "./lib/main.js"
+  },
   "scripts": {
     "test": "prettier --check README.md src/**/*.ts",
+    "clean": "rimraf lib",
     "build": "tsc",
     "start": "node lib/main.js",
     "develop": "ts-node src/main.ts",
-    "format": "prettier --write README.md src/**/*.ts"
+    "format": "prettier --write README.md src/**/*.ts",
+    "prepack": "yarn clean && yarn build"
   },
   "dependencies": {
-    "commander": "^9.4.1"
+    "commander": "^9.4.1",
+    "source-map-support": "^0.5.21"
   },
   "devDependencies": {
     "@tsconfig/node18": "^1.0.1",
     "@types/node": "^18.11.3",
     "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.4"
   },
   "bugs": "https://github.com/ksm2/helm-tools/issues",
   "homepage": "https://github.com/ksm2/helm-tools#readme",
+  "files": [
+    "README.md",
+    "lib"
+  ],
   "engines": {
     "node": ">= 18"
   }

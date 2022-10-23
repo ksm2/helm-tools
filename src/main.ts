@@ -1,4 +1,6 @@
+#!/usr/bin/env node
 import { program } from 'commander';
+import 'source-map-support/register';
 
 const { version } = require('../package.json');
 
