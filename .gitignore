@@ -1,0 +1,10 @@
+# Output
+lib/
+
+# Node
+node_modules/
+*.log
+
+# IDE
+.idea/
+*.iml
