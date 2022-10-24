@@ -35,6 +35,11 @@
   },
   "bugs": "https://github.com/ksm2/helm-tools/issues",
   "homepage": "https://github.com/ksm2/helm-tools#readme",
+  "author": {
+    "name": "Konstantin Möllers",
+    "email": "ksm.moellers@gmail.com",
+    "url": "https://moellers.systems"
+  },
   "files": [
     "README.md",
     "lib"
