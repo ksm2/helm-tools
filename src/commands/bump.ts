@@ -3,6 +3,7 @@ import process from 'node:process';
 import semver from 'semver/preload';
 import { Chart } from '../helm/Chart';
 import { Package } from '../npm/Package';
+import { ChartDoesNotExistError } from './ChartDoesNotExistError';
 import { VersionNotSetError } from './VersionNotSetError';
 
 export async function bump(chartLocation: string): Promise<void> {
@@ -15,6 +16,10 @@ export async function bump(chartLocation: string): Promise<void> {
 
   const chartFolder = path.resolve(cwd, chartLocation);
   const chart = await Chart.readFromFolder(chartFolder);
+  if (chart === undefined) {
+    throw new ChartDoesNotExistError(chartFolder);
+  }
+
   chart.appVersion = pkg.version;
   chart.description = pkg.description;
 

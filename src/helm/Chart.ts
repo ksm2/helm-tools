@@ -47,11 +47,25 @@ export class Chart {
     }
   }
 
-  static async readFromFolder(folder: string): Promise<Chart> {
+  static async readFromFolder(folder: string): Promise<Chart | undefined> {
     const manifestPath = this.resolveManifest(folder);
-    const manifestStr = await fs.readFile(manifestPath, 'utf-8');
+    const manifestStr = await this.readStringFile(manifestPath);
+    if (manifestStr === undefined) return undefined;
+
     const manifestDoc = parseDocument(manifestStr);
     return new Chart(manifestDoc.toJS(), manifestDoc);
+  }
+
+  private static async readStringFile(manifestPath: string): Promise<string | undefined> {
+    try {
+      return await fs.readFile(manifestPath, 'utf-8');
+    } catch (error: any) {
+      if (error.code === 'ENOENT') {
+        return undefined;
+      } else {
+        throw error;
+      }
+    }
   }
 
   async writeToFolder(folder: string): Promise<void> {
