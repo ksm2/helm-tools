@@ -74,7 +74,7 @@ export class Chart {
     await fs.writeFile(manifestPath, manifestStr);
   }
 
-  private static resolveManifest(folder: string): string {
+  static resolveManifest(folder: string): string {
     return path.resolve(folder, 'Chart.yaml');
   }
 

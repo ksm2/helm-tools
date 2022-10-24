@@ -1,6 +1,8 @@
 import path from 'node:path';
 import process from 'node:process';
 import semver from 'semver/preload';
+import { Git } from '../git/Git';
+import { Workspace } from '../git/Workspace';
 import { Chart } from '../helm/Chart';
 import { Package } from '../npm/Package';
 import { ChartDoesNotExistError } from './ChartDoesNotExistError';
@@ -26,4 +28,8 @@ export async function bump(chartLocation: string): Promise<void> {
   chart.version = semver.inc(chart.version, 'minor')!;
 
   await chart.writeToFolder(chartFolder);
+
+  const git = await Git.fromEnv();
+  const ws = new Workspace(git, cwd);
+  await ws.add(Chart.resolveManifest(chartLocation));
 }
