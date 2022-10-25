@@ -12,6 +12,10 @@ export class Chart {
     this.document = document ?? new Document(manifest);
   }
 
+  get name(): string {
+    return this.manifest.name;
+  }
+
   get version(): string {
     return this.manifest.version;
   }
