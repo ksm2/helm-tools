@@ -6,6 +6,7 @@ import tar from 'tar';
 import { Chart } from '../helm/Chart';
 import { ChartDoesNotExistError } from './ChartDoesNotExistError';
 import { DigestStream } from './DigestStream';
+import { writeProperties } from './properties';
 
 export async function pack(chartLocation: string): Promise<void> {
   const cwd = process.cwd();
@@ -35,14 +36,4 @@ export async function pack(chartLocation: string): Promise<void> {
 
   const digest = ds.digest();
   writeProperties({ filename, digest });
-}
-
-function writeProperties(record: { [key: string]: string }): void {
-  process.stdout.write(formatProperties(record));
-}
-
-function formatProperties(record: { [p: string]: string }): string {
-  return Object.entries(record)
-    .map(([key, value]) => `${key}=${value}\n`)
-    .join('');
 }
