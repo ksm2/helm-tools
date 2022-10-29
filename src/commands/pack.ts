@@ -1,11 +1,8 @@
-import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
-import { finished } from 'node:stream/promises';
-import tar from 'tar';
 import { Chart } from '../helm/Chart';
+import { ChartArchive } from '../helm/ChartArchive';
 import { ChartDoesNotExistError } from './ChartDoesNotExistError';
-import { DigestStream } from './DigestStream';
 import { writeProperties } from './properties';
 
 export async function pack(chartLocation: string): Promise<void> {
@@ -17,23 +14,10 @@ export async function pack(chartLocation: string): Promise<void> {
     throw new ChartDoesNotExistError(chartFolder);
   }
 
+  const archive = ChartArchive.create(chart, chartFolder);
+
   const filename = `${chart.name}-${chart.version}.tgz`;
-  const ds = new DigestStream('sha256');
-  const stream = tar
-    .create(
-      {
-        gzip: true,
-        prefix: chart.name,
-        cwd: chartFolder,
-        portable: true,
-      },
-      ['.'],
-    )
-    .pipe(ds)
-    .pipe(fs.createWriteStream(filename));
+  const digest = await archive.writeToFile(filename);
 
-  await finished(stream);
-
-  const digest = ds.digest();
   writeProperties({ filename, digest });
 }
