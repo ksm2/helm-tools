@@ -25,5 +25,5 @@ function createAutoOutputStrategy(): OutputStrategy {
     return new GithubStrategy();
   }
 
-  return new JsonStrategy()
+  return new JsonStrategy();
 }

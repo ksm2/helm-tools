@@ -3,5 +3,5 @@ export interface OutputStrategy {
 
   printWarning(msg: string): void;
 
-  flush(): Promise<void>
+  flush(): Promise<void>;
 }
