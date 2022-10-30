@@ -17,7 +17,8 @@ export async function pack(chartLocation: string): Promise<void> {
   const archive = ChartArchive.create(chart, chartFolder);
 
   const filename = `${chart.name}-${chart.version}.tgz`;
-  const digest = await archive.writeToFile(filename);
+  await archive.writeToFile(filename);
+  const digest = archive.digest();
 
   writeProperties({ filename, digest });
 }

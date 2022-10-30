@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { Document, parseDocument } from 'yaml';
 import { ChartManifest } from './ChartManifest';
+import { readStringFile } from './readStringFile';
 
 export class Chart {
   private readonly manifest: ChartManifest;
@@ -41,6 +42,10 @@ export class Chart {
     this.setOptionalProperty('description', value);
   }
 
+  getManifest(): ChartManifest {
+    return this.manifest;
+  }
+
   private setOptionalProperty(key: 'appVersion' | 'description', value?: string | undefined) {
     if (value === undefined) {
       delete this.manifest[key];
@@ -53,23 +58,15 @@ export class Chart {
 
   static async readFromFolder(folder: string): Promise<Chart | undefined> {
     const manifestPath = this.resolveManifest(folder);
-    const manifestStr = await this.readStringFile(manifestPath);
+    const manifestStr = await readStringFile(manifestPath);
     if (manifestStr === undefined) return undefined;
 
-    const manifestDoc = parseDocument(manifestStr);
-    return new Chart(manifestDoc.toJS(), manifestDoc);
+    return this.readFromString(manifestStr);
   }
 
-  private static async readStringFile(manifestPath: string): Promise<string | undefined> {
-    try {
-      return await fs.readFile(manifestPath, 'utf-8');
-    } catch (error: any) {
-      if (error.code === 'ENOENT') {
-        return undefined;
-      } else {
-        throw error;
-      }
-    }
+  static readFromString(manifestStr: string): Chart {
+    const manifestDoc = parseDocument(manifestStr);
+    return new Chart(manifestDoc.toJS(), manifestDoc);
   }
 
   async writeToFolder(folder: string): Promise<void> {
