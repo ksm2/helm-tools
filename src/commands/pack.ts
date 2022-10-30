@@ -2,10 +2,10 @@ import path from 'node:path';
 import process from 'node:process';
 import { Chart } from '../helm/Chart';
 import { ChartArchive } from '../helm/ChartArchive';
+import { Output } from '../output/Output';
 import { ChartDoesNotExistError } from './ChartDoesNotExistError';
-import { writeProperties } from './properties';
 
-export async function pack(chartLocation: string): Promise<void> {
+export async function pack(output: Output, chartLocation: string): Promise<void> {
   const cwd = process.cwd();
 
   const chartFolder = path.resolve(cwd, chartLocation);
@@ -20,5 +20,5 @@ export async function pack(chartLocation: string): Promise<void> {
   await archive.writeToFile(filename);
   const digest = archive.digest();
 
-  writeProperties({ filename, digest });
+  output.printProperties({ filename, digest });
 }

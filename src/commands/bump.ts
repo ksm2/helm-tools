@@ -5,10 +5,11 @@ import { Git } from '../git/Git';
 import { Workspace } from '../git/Workspace';
 import { Chart } from '../helm/Chart';
 import { Package } from '../npm/Package';
+import { Output } from '../output/Output';
 import { ChartDoesNotExistError } from './ChartDoesNotExistError';
 import { VersionNotSetError } from './VersionNotSetError';
 
-export async function bump(chartLocation: string): Promise<void> {
+export async function bump(output: Output, chartLocation: string): Promise<void> {
   const cwd = process.cwd();
 
   const pkg = await Package.readFromFolder(cwd);
@@ -32,4 +33,10 @@ export async function bump(chartLocation: string): Promise<void> {
   const git = await Git.fromEnv();
   const ws = new Workspace(git, cwd);
   await ws.add(Chart.resolveManifest(chartLocation));
+
+  output.printProperties({
+    chartName: chart.name,
+    chartVersion: chart.version,
+    appVersion: chart.appVersion,
+  });
 }

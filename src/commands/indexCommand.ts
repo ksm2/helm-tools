@@ -5,17 +5,18 @@ import { ChartArchive } from '../helm/ChartArchive';
 import { formatDate } from '../helm/formatDate';
 import { Index } from '../helm/Index';
 import { IndexEntry } from '../helm/IndexEntry';
+import { Output } from '../output/Output';
 import { IndexDoesNotExistError } from './IndexDoesNotExistError';
 
-export interface IndexOptions {
+export interface Options {
   chart: string;
   url: string[];
 }
 
-export async function indexCommand(indexLocation: string, options: IndexOptions): Promise<void> {
+export async function indexCommand(o: Output, indexLoc: string, options: Options): Promise<void> {
   const cwd = process.cwd();
 
-  const indexFolder = path.resolve(cwd, indexLocation);
+  const indexFolder = path.resolve(cwd, indexLoc);
   const index = await Index.readFromFolder(indexFolder);
   if (index === undefined) {
     throw new IndexDoesNotExistError(indexFolder);
@@ -25,9 +26,16 @@ export async function indexCommand(indexLocation: string, options: IndexOptions)
   const p = ChartArchive.read(chartLocation);
 
   const chart = await p.readChart();
-  const entry = createIndexEntry(chart, p.digest(), options.url);
+  const digest = p.digest();
+  const entry = createIndexEntry(chart, digest, options.url);
   index.addEntry(entry);
   await index.writeToFolder(indexFolder);
+
+  o.printProperties({
+    name: chart.name,
+    version: chart.version,
+    digest,
+  });
 }
 
 function createIndexEntry(chart: Chart, digest: string, urls: string[]): IndexEntry {

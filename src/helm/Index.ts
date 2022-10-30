@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { Document, parseDocument, Scalar } from 'yaml';
+import { groupBy } from '../utils/groupBy';
 import { formatDate } from './formatDate';
-import { groupBy } from './groupBy';
 import { IndexEntry } from './IndexEntry';
 import { readStringFile } from './readStringFile';
 
