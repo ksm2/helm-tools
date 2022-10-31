@@ -10,13 +10,13 @@
   },
   "scripts": {
     "test": "yarn test:format && yarn test:unit",
-    "test:format": "prettier --check README.md src/**/*.ts",
+    "test:format": "prettier --check README.md src/**/*.ts tests/**/*.ts",
     "test:unit": "jest",
     "clean": "rimraf lib",
     "build": "tsc --project tsconfig.build.json",
     "start": "node lib/main.js",
     "develop": "ts-node-esm src/main.ts",
-    "format": "prettier --write README.md src/**/*.ts",
+    "format": "prettier --write README.md src/**/*.ts tests/**/*.ts",
     "prepack": "yarn clean && yarn build"
   },
   "dependencies": {
