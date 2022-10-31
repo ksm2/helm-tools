@@ -9,3 +9,8 @@ node_modules/
 # IDE
 .idea/
 *.iml
+
+# Test
+coverage/
+helm-charts/
+my-chart/
