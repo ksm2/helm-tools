@@ -43,6 +43,7 @@
   },
   "bugs": "https://github.com/ksm2/helm-tools/issues",
   "homepage": "https://github.com/ksm2/helm-tools#readme",
+  "repository": "git@github.com:ksm2/helm-tools.git",
   "author": {
     "name": "Konstantin Möllers",
     "email": "ksm.moellers@gmail.com",
