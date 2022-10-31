@@ -2,6 +2,7 @@ import { GithubStrategy } from './GithubStrategy.js';
 import { JsonStrategy } from './JsonStrategy.js';
 import type { OutputStrategy } from './OutputStrategy.js';
 import { SilentStrategy } from './SilentStrategy.js';
+import { TtyStrategy } from './TtyStrategy.js';
 
 export function createOutputStrategy(format: string): OutputStrategy {
   switch (format) {
@@ -14,6 +15,9 @@ export function createOutputStrategy(format: string): OutputStrategy {
     case 'silent': {
       return new SilentStrategy();
     }
+    case 'tty': {
+      return new TtyStrategy();
+    }
     default: {
       const strategy = createAutoOutputStrategy();
       if (format !== 'auto') {
@@ -25,9 +29,11 @@ export function createOutputStrategy(format: string): OutputStrategy {
 }
 
 function createAutoOutputStrategy(): OutputStrategy {
-  if (GithubStrategy.isSupported()) {
+  if (TtyStrategy.isSupported()) {
+    return new TtyStrategy();
+  } else if (GithubStrategy.isSupported()) {
     return new GithubStrategy();
+  } else {
+    return new JsonStrategy();
   }
-
-  return new JsonStrategy();
 }
