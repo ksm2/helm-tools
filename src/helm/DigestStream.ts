@@ -9,7 +9,7 @@ export class DigestStream extends Transform {
     this.hash = crypto.createHash(algorithm);
   }
 
-  _transform(chunk: Buffer, encoding: BufferEncoding, callback: TransformCallback): void {
+  override _transform(chunk: Buffer, _encoding: BufferEncoding, callback: TransformCallback): void {
     this.hash.update(chunk);
     this.push(chunk);
     callback();

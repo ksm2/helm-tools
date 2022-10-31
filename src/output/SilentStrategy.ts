@@ -1,9 +1,9 @@
-import { OutputStrategy } from './OutputStrategy';
+import type { OutputStrategy } from './OutputStrategy.js';
 
 export class SilentStrategy implements OutputStrategy {
-  printProperties(record: { [key: string]: string | undefined }): void {}
+  printProperties(_record: { [key: string]: string | undefined }): void {}
 
-  printWarning(msg: string): void {}
+  printWarning(_msg: string): void {}
 
   async flush(): Promise<void> {}
 }

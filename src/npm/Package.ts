@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { PackageManifest, Person } from './PackageManifest';
+import type { PackageManifest, Person } from './PackageManifest.js';
 
 export class Package {
   readonly manifest: PackageManifest;

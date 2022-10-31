@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { Readable } from 'node:stream';
+import type { Readable } from 'node:stream';
 import { finished } from 'node:stream/promises';
 import tar from 'tar';
-import { Chart } from './Chart';
-import { DigestStream } from './DigestStream';
+import { Chart } from './Chart.js';
+import { DigestStream } from './DigestStream.js';
 
 export class ChartArchive {
   private readonly ds: DigestStream;

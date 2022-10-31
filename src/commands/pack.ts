@@ -1,9 +1,9 @@
 import path from 'node:path';
 import process from 'node:process';
-import { Chart } from '../helm/Chart';
-import { ChartArchive } from '../helm/ChartArchive';
-import { Output } from '../output/Output';
-import { ChartDoesNotExistError } from './ChartDoesNotExistError';
+import { Chart } from '../helm/Chart.js';
+import { ChartArchive } from '../helm/ChartArchive.js';
+import type { Output } from '../output/Output.js';
+import { ChartDoesNotExistError } from './ChartDoesNotExistError.js';
 
 export async function pack(output: Output, chartLocation: string): Promise<void> {
   const cwd = process.cwd();

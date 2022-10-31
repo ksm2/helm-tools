@@ -1,4 +1,4 @@
-import { Permission } from './Permission';
+import { Permission } from './Permission.js';
 
 export class Mode {
   readonly user: Permission;

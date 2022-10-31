@@ -1,4 +1,4 @@
-import { OutputStrategy } from './OutputStrategy';
+import type { OutputStrategy } from './OutputStrategy.js';
 
 export class JsonStrategy implements OutputStrategy {
   printProperties(properties: { [p: string]: string }): void {

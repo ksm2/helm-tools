@@ -2,8 +2,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import semver from 'semver';
 import { Document, parseDocument } from 'yaml';
-import { ChartManifest } from './ChartManifest';
-import { readStringFile } from './readStringFile';
+import type { ChartManifest } from './ChartManifest.js';
+import { readStringFile } from './readStringFile.js';
 
 export class Chart {
   readonly manifest: ChartManifest;

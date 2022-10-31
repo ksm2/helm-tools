@@ -1,12 +1,12 @@
 import path from 'node:path';
 import process from 'node:process';
-import { Chart } from '../helm/Chart';
-import { ChartArchive } from '../helm/ChartArchive';
-import { formatDate } from '../helm/formatDate';
-import { Index } from '../helm/Index';
-import { IndexEntry } from '../helm/IndexEntry';
-import { Output } from '../output/Output';
-import { IndexDoesNotExistError } from './IndexDoesNotExistError';
+import type { Chart } from '../helm/Chart.js';
+import { ChartArchive } from '../helm/ChartArchive.js';
+import { formatDate } from '../helm/formatDate.js';
+import { Index } from '../helm/Index.js';
+import type { IndexEntry } from '../helm/IndexEntry.js';
+import type { Output } from '../output/Output.js';
+import { IndexDoesNotExistError } from './IndexDoesNotExistError.js';
 
 export interface Options {
   chart: string;

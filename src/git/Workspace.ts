@@ -1,4 +1,4 @@
-import { Git } from './Git';
+import type { Git } from './Git.js';
 
 export class Workspace {
   private readonly git: Git;

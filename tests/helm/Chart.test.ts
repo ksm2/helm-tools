@@ -110,7 +110,7 @@ describe('Chart', () => {
       .replace(/^(\r\n|[\r\n])/, '')
       .trimEnd();
     const lines = str.split(/\r\n|[\r\n]/g);
-    const minIndent = Math.min(...lines.map((line) => line.match(/^ */)![0].length));
+    const minIndent = Math.min(...lines.map((line) => line.match(/^ */)![0]!.length));
     const indent = ' '.repeat(minIndent);
     return lines.map((line) => line.replace(indent, '') + '\n').join('');
   }

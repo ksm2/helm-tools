@@ -1,5 +1,5 @@
-import { createOutputStrategy } from './createOutputStrategy';
-import { OutputStrategy } from './OutputStrategy';
+import { createOutputStrategy } from './createOutputStrategy.js';
+import type { OutputStrategy } from './OutputStrategy.js';
 
 export class Output implements OutputStrategy {
   private strategy: OutputStrategy;

@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import process from 'node:process';
 import { finished } from 'node:stream/promises';
-import { OutputStrategy } from './OutputStrategy';
+import type { OutputStrategy } from './OutputStrategy.js';
 
 export class GithubStrategy implements OutputStrategy {
   private readonly stream: fs.WriteStream;

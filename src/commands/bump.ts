@@ -1,12 +1,12 @@
 import path from 'node:path';
 import process from 'node:process';
-import { Git } from '../git/Git';
-import { Workspace } from '../git/Workspace';
-import { Chart } from '../helm/Chart';
-import { Package } from '../npm/Package';
-import { Output } from '../output/Output';
-import { ChartDoesNotExistError } from './ChartDoesNotExistError';
-import { VersionNotSetError } from './VersionNotSetError';
+import { Git } from '../git/Git.js';
+import { Workspace } from '../git/Workspace.js';
+import { Chart } from '../helm/Chart.js';
+import { Package } from '../npm/Package.js';
+import type { Output } from '../output/Output.js';
+import { ChartDoesNotExistError } from './ChartDoesNotExistError.js';
+import { VersionNotSetError } from './VersionNotSetError.js';
 
 export async function bump(output: Output, chartLocation: string): Promise<void> {
   const cwd = process.cwd();

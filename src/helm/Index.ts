@@ -1,10 +1,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { Document, parseDocument, Scalar } from 'yaml';
-import { groupBy } from '../utils/groupBy';
-import { formatDate } from './formatDate';
-import { IndexEntry } from './IndexEntry';
-import { readStringFile } from './readStringFile';
+import { groupBy } from '../utils/groupBy.js';
+import { formatDate } from './formatDate.js';
+import type { IndexEntry } from './IndexEntry.js';
+import { readStringFile } from './readStringFile.js';
 
 export class Index {
   private readonly entries: IndexEntry[];

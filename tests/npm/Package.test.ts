@@ -1,5 +1,5 @@
 import { Package } from '../../src/npm/Package';
-import { PackageManifest, Person } from '../../src/npm/PackageManifest';
+import type { PackageManifest, Person } from '../../src/npm/PackageManifest';
 
 describe('Package', () => {
   it('should get the author', () => {

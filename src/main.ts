@@ -1,21 +1,23 @@
 #!/usr/bin/env node
 import { program } from 'commander';
-import 'source-map-support/register';
+import fs from 'node:fs';
+import sourceMapSupport from 'source-map-support';
 
-import { bump } from './commands/bump';
-import { indexCommand } from './commands/indexCommand';
-import { pack } from './commands/pack';
-import { Output } from './output/Output';
-import { curry } from './utils/curry';
+import { bump } from './commands/bump.js';
+import { indexCommand } from './commands/indexCommand.js';
+import { pack } from './commands/pack.js';
+import { Output } from './output/Output.js';
+import { curry } from './utils/curry.js';
 
-const { version } = require('../package.json');
+sourceMapSupport.install();
 
 const output = new Output();
+const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf-8'));
 
 program
   .name('helm-tools')
   .description('CLI tool to interact with Helm Charts')
-  .version(version)
+  .version(pkg.version)
   .option('-o, --output <format>', 'specifies how to output details', 'auto');
 
 program.on('option:output', (format) => {

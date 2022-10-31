@@ -1,7 +1,7 @@
-import { GithubStrategy } from './GithubStrategy';
-import { JsonStrategy } from './JsonStrategy';
-import { OutputStrategy } from './OutputStrategy';
-import { SilentStrategy } from './SilentStrategy';
+import { GithubStrategy } from './GithubStrategy.js';
+import { JsonStrategy } from './JsonStrategy.js';
+import type { OutputStrategy } from './OutputStrategy.js';
+import { SilentStrategy } from './SilentStrategy.js';
 
 export function createOutputStrategy(format: string): OutputStrategy {
   switch (format) {
