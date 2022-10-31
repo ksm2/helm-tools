@@ -5,7 +5,6 @@ const config = {
   moduleNameMapper: {
     '\.(.*)\.js$': '.$1',
   },
-  collectCoverage: true,
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
 };
 
