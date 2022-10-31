@@ -1,59 +1,27 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import semver from 'semver';
 import { Document, parseDocument } from 'yaml';
 import { ChartManifest } from './ChartManifest';
 import { readStringFile } from './readStringFile';
 
 export class Chart {
-  private readonly manifest: ChartManifest;
+  readonly manifest: ChartManifest;
   private readonly document: Document;
 
   constructor(manifest: ChartManifest, document?: Document) {
-    this.manifest = manifest;
+    this.manifest = new Proxy(manifest, {
+      set: (target: ChartManifest, key: string | symbol, newValue: any, receiver: any): boolean => {
+        if (newValue === undefined) {
+          this.document.delete(key);
+          return Reflect.deleteProperty(target, key);
+        } else {
+          this.document.set(key, newValue);
+          return Reflect.set(target, key, newValue, receiver);
+        }
+      },
+    });
     this.document = document ?? new Document(manifest);
-  }
-
-  get name(): string {
-    return this.manifest.name;
-  }
-
-  get version(): string {
-    return this.manifest.version;
-  }
-
-  set version(value: string) {
-    this.manifest.version = value;
-    this.document.set('version', this.manifest.version);
-  }
-
-  get appVersion(): string | undefined {
-    return this.manifest.appVersion;
-  }
-
-  set appVersion(value: string | undefined) {
-    this.setOptionalProperty('appVersion', value);
-  }
-
-  get description(): string | undefined {
-    return this.manifest.description;
-  }
-
-  set description(value: string | undefined) {
-    this.setOptionalProperty('description', value);
-  }
-
-  getManifest(): ChartManifest {
-    return this.manifest;
-  }
-
-  private setOptionalProperty(key: 'appVersion' | 'description', value?: string | undefined) {
-    if (value === undefined) {
-      delete this.manifest[key];
-      this.document.delete(key);
-    } else {
-      this.manifest[key] = value;
-      this.document.set(key, value);
-    }
   }
 
   static async readFromFolder(folder: string): Promise<Chart | undefined> {
@@ -81,5 +49,9 @@ export class Chart {
 
   toString(): string {
     return this.document.toString();
+  }
+
+  bump(release: semver.ReleaseType): void {
+    this.manifest.version = semver.inc(this.manifest.version, release)!;
   }
 }

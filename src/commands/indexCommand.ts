@@ -31,14 +31,14 @@ export async function indexCommand(o: Output, indexLoc: string, options: Options
   index.addEntry(entry);
   await index.writeToFolder(indexFolder);
 
-  o.printProperties({
-    name: chart.name,
-    version: chart.version,
-    digest,
-  });
+  const chartName = chart.manifest.name;
+  const chartVersion = chart.manifest.version;
+  const appVersion = chart.manifest.appVersion;
+
+  o.printProperties({ chartName, chartVersion, appVersion, digest });
 }
 
 function createIndexEntry(chart: Chart, digest: string, urls: string[]): IndexEntry {
   const created = formatDate(new Date());
-  return { ...chart.getManifest(), digest, created, urls };
+  return { ...chart.manifest, digest, created, urls };
 }

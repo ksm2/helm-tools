@@ -16,9 +16,13 @@ export async function pack(output: Output, chartLocation: string): Promise<void>
 
   const archive = ChartArchive.create(chart, chartFolder);
 
-  const filename = `${chart.name}-${chart.version}.tgz`;
+  const chartName = chart.manifest.name;
+  const chartVersion = chart.manifest.version;
+  const appVersion = chart.manifest.appVersion;
+
+  const filename = `${chartName}-${chartVersion}.tgz`;
   await archive.writeToFile(filename);
   const digest = archive.digest();
 
-  output.printProperties({ filename, digest });
+  output.printProperties({ chartName, chartVersion, appVersion, filename, digest });
 }

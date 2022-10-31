@@ -12,7 +12,7 @@ export class Output implements OutputStrategy {
     this.strategy = createOutputStrategy(format);
   }
 
-  printProperties(properties: { [key: string]: string }): void {
+  printProperties(properties: { [key: string]: string | undefined }): void {
     this.strategy.printProperties(properties);
   }
 

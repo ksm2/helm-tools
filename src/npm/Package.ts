@@ -1,20 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { PackageManifest } from './PackageManifest';
+import { PackageManifest, Person } from './PackageManifest';
 
 export class Package {
-  private readonly manifest: PackageManifest;
+  readonly manifest: PackageManifest;
 
   constructor(manifest: PackageManifest) {
     this.manifest = manifest;
-  }
-
-  get description(): string | undefined {
-    return this.manifest.description;
-  }
-
-  get version(): string | undefined {
-    return this.manifest.version;
   }
 
   static async readFromFolder(folder: string): Promise<Package> {
@@ -26,5 +18,23 @@ export class Package {
 
   private static resolveManifest(folder: string) {
     return path.resolve(folder, 'package.json');
+  }
+
+  get author(): Person | undefined {
+    if (typeof this.manifest.author === 'string') {
+      return Package.parsePersonString(this.manifest.author);
+    } else if (this.manifest.author !== undefined) {
+      return this.manifest.author;
+    } else {
+      return undefined;
+    }
+  }
+
+  private static parsePersonString(str: string): Person {
+    const match = str.match(/^(?<name>.*?)\s*<(?<email>.*)>$/);
+    if (match !== null) {
+      return match.groups as { name: string; email: string };
+    }
+    return { name: str };
   }
 }

@@ -1,5 +1,5 @@
 export interface OutputStrategy {
-  printProperties(properties: { [key: string]: string }): void;
+  printProperties(properties: { [key: string]: string | undefined }): void;
 
   printWarning(msg: string): void;
 

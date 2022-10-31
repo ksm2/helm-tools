@@ -18,12 +18,13 @@ export class GithubStrategy implements OutputStrategy {
     return process.env['GITHUB_OUTPUT'] !== undefined;
   }
 
-  printProperties(record: { [key: string]: string }): void {
+  printProperties(record: { [key: string]: string | undefined }): void {
     this.stream.write(GithubStrategy.formatProperties(record));
   }
 
-  private static formatProperties(record: { [p: string]: string }): string {
+  private static formatProperties(record: { [p: string]: string | undefined }): string {
     return Object.entries(record)
+      .filter(([, value]) => value)
       .map(([key, value]) => `${this.toKebab(key)}=${value}\n`)
       .join('');
   }

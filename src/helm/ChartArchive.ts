@@ -20,7 +20,7 @@ export class ChartArchive {
       tar.create(
         {
           gzip: true,
-          prefix: chart.name,
+          prefix: chart.manifest.name,
           cwd: chartFolder,
           portable: true,
         },
