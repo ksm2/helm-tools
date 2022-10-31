@@ -1,6 +1,7 @@
 import { GithubStrategy } from './GithubStrategy';
 import { JsonStrategy } from './JsonStrategy';
 import { OutputStrategy } from './OutputStrategy';
+import { SilentStrategy } from './SilentStrategy';
 
 export function createOutputStrategy(format: string): OutputStrategy {
   switch (format) {
@@ -9,6 +10,9 @@ export function createOutputStrategy(format: string): OutputStrategy {
     }
     case 'json': {
       return new JsonStrategy();
+    }
+    case 'silent': {
+      return new SilentStrategy();
     }
     default: {
       const strategy = createAutoOutputStrategy();
